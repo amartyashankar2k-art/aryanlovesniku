@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>For Nikku ❤️ | A Special Love Surprise</title>
+  
+  <!-- Romantic & Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Nunito:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Canvas for Floating Hearts & Twinkling Stars -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Floating Bokeh & Heart Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Audio Controls / Floating Player -->
+  <div class="music-controller" id="musicController" title="Play / Pause Romantic Music">
+    <button class="music-btn" id="musicBtn" aria-label="Toggle Romantic Music">
+      <i class="fa-solid fa-music" id="musicIcon"></i>
+      <span class="music-waves">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <span class="music-tooltip">Our Song 🎵</span>
+  </div>
+
+  <!-- Main Journey Container -->
+  <main class="app-container">
+    
+    <!-- Header Progress Tracker -->
+    <header class="journey-header">
+      <div class="brand-title">Aaru <span class="heart-pulse">❤️</span> Nikku</div>
+      <div class="progress-bar-container">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="step-indicator" id="stepIndicator">Step 1 of 9</div>
+      </div>
+    </header>
+
+    <!-- STEP PAGES WRAPPER -->
+    <div class="steps-wrapper">
+
+      <!-- ================= PAGE 1: The Envelope & First Question ================= -->
+      <section class="step-page active" id="page-1" data-step="1">
+        <div class="envelope-scene" id="envelopeScene">
+          <!-- 3D Love Envelope -->
+          <div class="envelope-box" id="envelopeBox">
+            <div class="envelope-front">
+              <div class="envelope-flap" id="envelopeFlap"></div>
+              <div class="envelope-pocket"></div>
+              <div class="wax-seal" id="waxSeal">
+                <span>❤️</span>
+                <small>Tap to open</small>
+              </div>
+            </div>
+            
+            <!-- Letter sliding out of envelope -->
+            <div class="envelope-letter" id="envelopeLetter">
+              <div class="letter-mini-header">
+                <i class="fa-solid fa-heart mini-heart"></i>
+                <span>A special delivery</span>
+                <i class="fa-solid fa-heart mini-heart"></i>
+              </div>
+              <p class="letter-announcement">
+                Aaru has sent some love for Nikku! ❤️
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Card (revealed when envelope is opened) -->
+        <div class="card question-card glass-panel" id="page1QuestionArea">
+          <div class="card-badge">To My Sweetheart 🌸</div>
+          <h1 class="romantic-title">Aaru has sent some love for Nikku! ❤️</h1>
+          <p class="romantic-subtitle">I have a very important question to ask you first...</p>
+          
+          <div class="question-box">
+            <h2 class="question-text">Do you love me?</h2>
+          </div>
+
+          <!-- Buttons Container (With Runaway "No" Button) -->
+          <div class="action-buttons dual-buttons" id="runawayArea">
+            <button class="btn btn-primary pulse-btn" id="btnP1Yes">
+              <i class="fa-solid fa-heart"></i> Yes, of course! 🥰
+            </button>
+            <button class="btn btn-secondary runaway-btn" id="btnP1No">
+              No 🙈
+            </button>
+          </div>
+          <p class="hint-text">Psst... choose honestly! (if you can 😉)</p>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 2: The Best & Worst ================= -->
+      <section class="step-page" id="page-2" data-step="2">
+        <div class="card glass-panel">
+          <div class="card-badge">Candid Confessions ✨</div>
+          <h2 class="romantic-title">The Best & Worst</h2>
+          <p class="romantic-subtitle">I want to know what goes on in that pretty little mind of yours...</p>
+          
+          <div class="question-box">
+            <h3 class="question-text">What are the best and worst things about me?</h3>
+          </div>
+
+          <form id="formPage2" class="romantic-form" onsubmit="return false;">
+            <div class="input-group">
+              <label for="inputBest">
+                <i class="fa-solid fa-star text-gold"></i> Best thing about Aaru:
+              </label>
+              <textarea 
+                id="inputBest" 
+                rows="3" 
+                placeholder="What makes your heart melt when I'm around? (e.g., your smile, how you care for me...)"
+                required
+              ></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="inputWorst">
+                <i class="fa-solid fa-face-grimace text-blush"></i> Worst thing (or what can I improve?):
+              </label>
+              <textarea 
+                id="inputWorst" 
+                rows="3" 
+                placeholder="Don't hold back, I can take it! (e.g., being stubborn, bad jokes...)"
+                required
+              ></textarea>
+            </div>
+
+            <div class="action-buttons">
+              <button type="submit" class="btn btn-primary" id="btnP2Submit">
+                Submit with Love <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 3: Feelings ================= -->
+      <section class="step-page" id="page-3" data-step="3">
+        <div class="card glass-panel">
+          <div class="card-badge">Heart to Heart 💭</div>
+          <h2 class="romantic-title">Feelings</h2>
+          <p class="romantic-subtitle">Close your eyes for a moment, think of me, and tell me...</p>
+          
+          <div class="question-box">
+            <h3 class="question-text">How do you feel when you are with me?</h3>
+          </div>
+
+          <!-- Quick Feeling Tag Pills -->
+          <div class="feeling-tags">
+            <button type="button" class="tag-pill" data-feel="Safe & Protected 🛡️">Safe & Protected 🛡️</button>
+            <button type="button" class="tag-pill" data-feel="Butterflies in stomach 🦋">Butterflies in stomach 🦋</button>
+            <button type="button" class="tag-pill" data-feel="Like I'm home 🏡">Like I'm home 🏡</button>
+            <button type="button" class="tag-pill" data-feel="The happiest girl alive ✨">Happiest girl alive ✨</button>
+            <button type="button" class="tag-pill" data-feel="Totally myself without fear 💕">Totally myself 💕</button>
+          </div>
+
+          <form id="formPage3" class="romantic-form" onsubmit="return false;">
+            <div class="input-group">
+              <textarea 
+                id="inputFeelings" 
+                rows="4" 
+                placeholder="Write your heart out Nikku... Every single word from you is precious to me 💖"
+                required
+              ></textarea>
+            </div>
+
+            <div class="action-buttons nav-actions">
+              <button type="button" class="btn btn-outline" id="btnP3Back">
+                <i class="fa-solid fa-arrow-left"></i> Back
+              </button>
+              <button type="submit" class="btn btn-primary" id="btnP3Next">
+                Next <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 4: The Big Question ================= -->
+      <section class="step-page" id="page-4" data-step="4">
+        <div class="card glass-panel ring-theme">
+          <div class="card-badge">The Promise of Forever 💍</div>
+          
+          <div class="ring-animation-box">
+            <div class="ring-sparkle">✨</div>
+            <div class="ring-icon">💍</div>
+            <div class="ring-sparkle right">✨</div>
+          </div>
+
+          <h2 class="romantic-title">The Big Question</h2>
+          <p class="romantic-subtitle">I don't just want chapters with you, I want the whole book...</p>
+          
+          <div class="question-box highlight-box">
+            <h3 class="question-text big-question">Are you ready to marry me?</h3>
+          </div>
+
+          <div class="action-buttons dual-buttons" id="marryButtonsArea">
+            <button class="btn btn-primary pulse-btn" id="btnP4Yes">
+              <i class="fa-solid fa-heart-circle-check"></i> Yes, 1000 Times YES! 👰‍♀️❤️🤵‍♂️
+            </button>
+            <button class="btn btn-secondary runaway-btn" id="btnP4No">
+              No 🙈
+            </button>
+          </div>
+          <p class="hint-text">Choose wisely, there's a ring waiting for that finger! 💫</p>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 5: Safe Place ================= -->
+      <section class="step-page" id="page-5" data-step="5">
+        <div class="card glass-panel safe-theme">
+          <div class="card-badge">My Ultimate Promise 🫂</div>
+          
+          <div class="safe-icon-box">
+            <div class="cozy-emoji">🏡</div>
+            <div class="shield-hearts">💖</div>
+          </div>
+
+          <h2 class="romantic-title">Safe Place</h2>
+          <p class="romantic-subtitle">In this chaotic world, I always want to be your calmest shelter.</p>
+          
+          <div class="question-box">
+            <h3 class="question-text">Do you feel comfortable and safe with me?</h3>
+          </div>
+
+          <div class="action-buttons dual-buttons" id="safeButtonsArea">
+            <button class="btn btn-primary" id="btnP5Yes">
+              <i class="fa-solid fa-shield-heart"></i> Yes, Always Safe & Loved 🫂💕
+            </button>
+            <button class="btn btn-secondary runaway-btn" id="btnP5No">
+              No 🤔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 6: The Love Letter ================= -->
+      <section class="step-page" id="page-6" data-step="6">
+        <div class="card parchment-letter glass-letter">
+          <div class="letter-top-decor">
+            <span class="ribbon-flower">🌸</span>
+            <span class="letter-date">For My One & Only</span>
+            <span class="ribbon-flower">🌸</span>
+          </div>
+
+          <h2 class="letter-salutation">My Dearest Nikku,</h2>
+
+          <div class="letter-body">
+            <p>
+              From the moment you walked into my world, you turned ordinary days into pure poetry. Your laughter is my favorite melody, your eyes are my favorite view, and your happiness is my greatest goal. 
+            </p>
+            <p>
+              Whenever I look at you, I see my partner in crime, my best friend, and my whole universe. Thank you for loving me, for putting up with my quirks, and for giving my heart a home it never knew it needed. You make me want to be the best version of myself every single day.
+            </p>
+
+            <!-- Romantic Hindi Love Shayari -->
+            <div class="shayari-box">
+              <div class="shayari-decor"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="shayari-hindi">
+                तेरी धड़कन ही ज़िन्दगी का किस्सा है मेरा,<br>
+                तू ज़िंदगी का एक अहम हिस्सा है मेरा,<br>
+                मेरी मोहब्बत सिर्फ लफ्जों की मोहताज नहीं,<br>
+                तेरी रूह से रूह तक का रिश्ता है मेरा। 💕
+              </p>
+              <div class="shayari-decor text-right"><i class="fa-solid fa-quote-right"></i></div>
+            </div>
+
+            <p>
+              No matter what mountains we have to climb or what storms come our way, I promise to hold your hand through it all. You are my today, my tomorrow, and every dream I have ever dared to pray for.
+            </p>
+
+            <!-- MANDATORY EXACT SENTENCES -->
+            <div class="mandatory-love-lines">
+              <p class="exact-line bold-love">I love you Nikku so much ❤️</p>
+              <p class="exact-line forever-love">I want to live my all life with you ♾️👩❤️👨</p>
+            </div>
+          </div>
+
+          <div class="letter-signature">
+            <p>With all my heart & soul,</p>
+            <span class="sig-name">Forever Yours, Aaru 💌</span>
+          </div>
+
+          <div class="action-buttons letter-actions">
+            <button class="btn btn-outline" id="btnP6Back">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn btn-primary" id="btnP6Next">
+              See Our Memories <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 7: Photo Gallery ================= -->
+      <section class="step-page" id="page-7" data-step="7">
+        <div class="card glass-panel wide-card">
+          <div class="card-badge">Our Beautiful Journey 📸</div>
+          <h2 class="romantic-title">Our Photo Gallery</h2>
+          <p class="romantic-subtitle">Every snapshot with you is a treasure locked in my heart forever.</p>
+
+          <!-- Interactive Photo Grid / Polaroid Cards (All 10 Moments) -->
+          <div class="photo-gallery-grid">
+
+            <!-- Photo Card 1: Close-up Selfie with Flower -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo1.jpg" 
+                  alt="Aaru and Nikku sweet close-up"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"In your smile, I see something more beautiful than all the stars."</p>
+                <span class="quote-author">~ My Prettiest Flower 🌸</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 2: Better Together Collage -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo2.jpg" 
+                  alt="Better Together sweet moments collage"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Two souls, one heartbeat, better together forever and always."</p>
+                <span class="quote-author">~ Better Together 💖</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 3: Fairy Lights Night -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo3.jpg" 
+                  alt="Aaru and Nikku under fairy lights"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Even among thousands of fairy lights, the brightest light is your eyes."</p>
+                <span class="quote-author">~ Our Magical Night ✨</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 4: Standing Together Close -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo4.jpg" 
+                  alt="Aaru holding Nikku close"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Holding you close and walking through life with you is my greatest joy."</p>
+                <span class="quote-author">~ By Your Side Always 🫂</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 5: Sweet Moment Together -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo5.jpg" 
+                  alt="Aaru and Nikku smiling together"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"You stole my heart from day one, and I never want it back."</p>
+                <span class="quote-author">~ My Forever Person ♾️</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 6: Holding Hands Facing Each Other -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo6.jpg" 
+                  alt="Aaru and Nikku holding hands lovingly"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"As long as I'm holding your hands, I know I'm right where I belong."</p>
+                <span class="quote-author">~ Hand in Hand Forever 🤝❤️</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 7: Sweet Indoor Selfie in Pink Top -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo7.jpg" 
+                  alt="Sweet selfie of Aaru and Nikku"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Your smile is my daily dose of sunshine and happiness."</p>
+                <span class="quote-author">~ My Sweetest Smile 😊💕</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 8: Night Event Celebration -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo8.jpg" 
+                  alt="Aaru and Nikku at celebration night"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Every celebration is ten times more special because you are by my side."</p>
+                <span class="quote-author">~ The One For Me 🥂✨</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 9: Loving Stare Under Night Lights -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo9.jpg" 
+                  alt="Sweet moment at night event"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"No crowd, no noise could ever distract my eyes from you."</p>
+                <span class="quote-author">~ Only You, Nikku 🌹</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 10: Special Evening Together -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo10.jpg" 
+                  alt="Aaru and Nikku portrait"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"With you, every single memory is wrapped in golden light and pure love."</p>
+                <span class="quote-author">~ Endless Memories 📸💫</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 11: Nikku in Red Saree -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo11.jpg" 
+                  alt="Nikku in gorgeous red saree"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"In red, you don't just take my breath away, you own every heartbeat."</p>
+                <span class="quote-author">~ My Queen in Red 👑❤️</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 12: Radiant Smile in Pink Kurti -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo12.jpg" 
+                  alt="Nikku smiling sweetly in pink kurti"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Your smile is my favorite reason to fall in love with life every morning."</p>
+                <span class="quote-author">~ Pure Radiance 💖</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 13: Traditional Yellow & Jhumkas -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo13.jpg" 
+                  alt="Nikku in traditional yellow dress"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"You look like a dream carved out of sunshine, grace, and pure love."</p>
+                <span class="quote-author">~ My Golden Sunshine ☀️✨</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 14: Colors of Love -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo14.jpg" 
+                  alt="Nikku with sweet outdoor smile"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"You bring all the vibrant colors of love and laughter into my world."</p>
+                <span class="quote-author">~ Colors of My Life 🎨💕</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 15: Standing Proudly Together -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo15.jpg" 
+                  alt="Aaru and Nikku smiling side by side"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Wherever life leads us, as long as I have you, I have everything."</p>
+                <span class="quote-author">~ My Whole World 🌍♾️</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 16: Traditional Olive Royal Elegance -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo16.jpg" 
+                  alt="Nikku in royal olive traditional outfit"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"You look like an absolute royal queen. In every crowd, you're the only star."</p>
+                <span class="quote-author">~ Royal Elegance 👑💚</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 17: In the Garden of Flowers -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo17.jpg" 
+                  alt="Nikku posing in garden with flowers"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Even in a garden full of blooming flowers, my eyes will always choose you."</p>
+                <span class="quote-author">~ Prettier than Flowers 🌺✨</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 18: Pure Sweet Innocence -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo18.jpg" 
+                  alt="Nikku cute selfie with flower"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"That innocent, adorable smile is the only poetry my heart ever needs."</p>
+                <span class="quote-author">~ Pure Innocence 🌸💫</span>
+              </div>
+            </div>
+
+            <!-- Photo Card 19: Peaceful Haven -->
+            <div class="polaroid-card">
+              <div class="pin-tape"></div>
+              <div class="photo-frame">
+                <img 
+                  src="images/photo19.jpg" 
+                  alt="Nikku with loving expression"
+                  class="gallery-img"
+                  loading="lazy"
+                >
+              </div>
+              <div class="polaroid-caption">
+                <p class="quote-text">"Just looking at your sweet face makes every worry in my world vanish."</p>
+                <span class="quote-author">~ My Peaceful Haven 🏡💖</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="action-buttons nav-actions">
+            <button class="btn btn-outline" id="btnP7Back">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn btn-primary" id="btnP7Next">
+              A Special Video Next <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 8: A Special Video ================= -->
+      <section class="step-page" id="page-8" data-step="8">
+        <div class="card glass-panel video-card-panel">
+          <div class="card-badge">Our Movie Reel 🎬</div>
+
+          <!-- MANDATORY EXACT CAPTION REQUESTED BY USER -->
+          <h2 class="video-exact-caption">for you my love nikuu</h2>
+          <p class="romantic-subtitle">Every photograph with you is a frame of my happiest life 💖</p>
+
+          <!-- Beautifully Framed Video Player Container with Cute Romantic Border -->
+          <div class="video-frame-outer cute-romantic-frame">
+            <div class="video-frame-glow"></div>
+            
+            <div class="video-frame-inner">
+              <!-- Corner Decorative Accents -->
+              <div class="frame-corner corner-tl">🌸</div>
+              <div class="frame-corner corner-tr">🌸</div>
+              <div class="frame-corner corner-bl">🌸</div>
+              <div class="frame-corner corner-br">🌸</div>
+
+              <div class="video-wrapper reel-video-wrapper">
+                <!-- Canvas Video Renderer: Cinematic Slideshow of the 19 photos -->
+                <canvas id="photoReelCanvas" class="reel-canvas" width="1280" height="720"></canvas>
+
+                <!-- Floating Play/Pause Overlay -->
+                <div class="reel-play-overlay active" id="reelPlayOverlay">
+                  <button class="reel-play-btn" id="reelPlayBtn" aria-label="Play our love video">
+                    <i class="fa-solid fa-play" id="reelPlayIcon"></i>
+                  </button>
+                  <p class="reel-play-text">Tap to play our love video 🎵❤️</p>
+                </div>
+
+                <!-- Live Subtitles / Caption on Video -->
+                <div class="reel-subtitle-bar" id="reelSubtitleBar">
+                  <span class="reel-counter-badge" id="reelCounterBadge">Photo 1 of 19 ✨</span>
+                  <p class="reel-quote-text" id="reelQuoteText">"In your smile, I see something more beautiful than all the stars."</p>
+                </div>
+              </div>
+
+              <!-- Custom Romantic Video Controls Bar -->
+              <div class="reel-controls-bar">
+                <button class="reel-ctrl-btn" id="reelCtrlPlay" title="Play / Pause">
+                  <i class="fa-solid fa-play" id="reelCtrlPlayIcon"></i>
+                </button>
+                <button class="reel-ctrl-btn" id="reelCtrlPrev" title="Previous photo">
+                  <i class="fa-solid fa-backward-step"></i>
+                </button>
+                <div class="reel-progress-wrap" id="reelProgressWrap">
+                  <div class="reel-progress-fill" id="reelProgressFill"></div>
+                </div>
+                <button class="reel-ctrl-btn" id="reelCtrlNext" title="Next photo">
+                  <i class="fa-solid fa-forward-step"></i>
+                </button>
+                <button class="reel-ctrl-btn" id="reelCtrlAudio" title="Toggle Love Music">
+                  <i class="fa-solid fa-volume-high" id="reelCtrlAudioIcon"></i>
+                </button>
+                <span class="reel-time-display" id="reelTimeDisplay">0:00 / 1:35</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="video-subnote">
+            "No camera in this universe could ever capture just how gorgeous you look when you smile." 💕
+          </p>
+
+          <div class="reel-download-wrapper">
+            <button class="btn btn-secondary btn-sm" id="btnDownloadReel">
+              <i class="fa-solid fa-download"></i> Save / Export Video Reel 📥
+            </button>
+          </div>
+
+          <div class="action-buttons nav-actions">
+            <button class="btn btn-outline" id="btnP8Back">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <!-- MANDATORY NEXT BUTTON TO PROCEED TO END -->
+            <button class="btn btn-primary pulse-btn" id="btnP8Next">
+              The Grand Finale <i class="fa-solid fa-sparkles"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 9: The Grand Finale ================= -->
+      <section class="step-page" id="page-9" data-step="9">
+        <div class="card glass-panel finale-card">
+          <div class="finale-crown">👑</div>
+          <div class="card-badge">Forever & Always ✨</div>
+
+          <h1 class="finale-title">To Eternity & Beyond, Nikku! 💖</h1>
+          
+          <div class="finale-heart-burst">
+            <span class="floating-emoji e-1">🌸</span>
+            <span class="floating-emoji e-2">💖</span>
+            <span class="floating-emoji e-3">✨</span>
+            <div class="big-pulsing-heart">❤️</div>
+            <span class="floating-emoji e-4">💍</span>
+            <span class="floating-emoji e-5">🌹</span>
+          </div>
+
+          <!-- Final Heartwarming Romantic Message -->
+          <div class="finale-message-box">
+            <p class="finale-message-lead">
+              Dearest Nikku,
+            </p>
+            <p class="finale-message-body">
+              This little website is just a tiny glimpse of how deeply and truly you are cherished. In a world of billions of souls, my heart chose you, and it will choose you again in every lifetime, over and over, without a single doubt.
+            </p>
+            <p class="finale-message-body">
+              May your days be as bright as your contagious smile, may your heart always feel safe and cherished in my arms, and may our love grow softer, stronger, and more magical with each passing sunset.
+            </p>
+            <div class="finale-highlight">
+              "You are my today, my tomorrow, and my forever happily ever after." ♾️👩❤️👨
+            </div>
+            <p class="finale-signoff">
+              All my love, today and for the rest of my days,<br>
+              <strong>Your Aaru ❤️</strong>
+            </p>
+          </div>
+
+          <!-- Interactive Finale Actions -->
+          <div class="finale-actions">
+            <button class="btn btn-primary pulse-btn" id="btnCelebrateAgain">
+              <i class="fa-solid fa-sparkles"></i> Shower More Love! 🎉
+            </button>
+
+            <!-- Send Answers to Aaru on WhatsApp -->
+            <button class="btn btn-whatsapp" id="btnSendWhatsApp">
+              <i class="fa-brands fa-whatsapp"></i> Send My Answers to Aaru 💬
+            </button>
+
+            <!-- Restart Journey -->
+            <button class="btn btn-outline" id="btnRestartJourney">
+              <i class="fa-solid fa-rotate-left"></i> Relive Our Journey
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /steps-wrapper -->
+
+    <!-- Persistent Floating Footer / Love Stamp -->
+    <footer class="app-footer">
+      <span>Crafted with pure love by <strong>Aaru</strong> for <strong>Nikku</strong> ♾️</span>
+    </footer>
+
+  </main>
+
+  <!-- Kissing Emoji Popup Overlay (Triggered on Page 2 Submit) -->
+  <div class="kiss-overlay" id="kissOverlay">
+    <div class="kiss-container">
+      <div class="kiss-emoji-main" id="kissEmojiMain">😘</div>
+      <div class="kiss-hearts-burst" id="kissHeartsBurst"></div>
+      <div class="kiss-caption">A sweet kiss for my beautiful Nikku! 💋</div>
+    </div>
+  </div>
+
+  <!-- Sweet Toast Notifications -->
+  <div class="toast-notification" id="toastNotification">
+    <span id="toastMessage">Sweet message here!</span>
+  </div>
+
+  <!-- Image Lightbox Modal for Gallery -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img class="lightbox-image" id="lightboxImage" src="" alt="Enlarged Memory">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
